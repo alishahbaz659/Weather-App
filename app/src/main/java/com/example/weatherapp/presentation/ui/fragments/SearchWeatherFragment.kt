@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,57 +14,45 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
+import com.example.weatherapp.databinding.FragmentSearchWeatherBinding
 import com.example.weatherapp.presentation.viewModel.CurrentLocationWeatherViewModel
 
+import com.example.weatherapp.presentation.viewModel.CurrentWeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 
 
 @AndroidEntryPoint
-class CurrentWeatherFragment : Fragment() {
-    private var _binding: FragmentCurrentWeatherBinding? = null
+class SearchWeatherFragment : Fragment() {
+    private var _binding: FragmentSearchWeatherBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelCurrentLocation: CurrentLocationWeatherViewModel by viewModels()
-    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    private lateinit var currentLocationName: String
-    private lateinit var currentLocationTemprature: String
+    private val viewModel: CurrentWeatherViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-        permissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { result ->
-            result.entries.forEach {
-                Log.d("DEBUG", "${it.key} = ${it.value}")
-            }
-            viewModelCurrentLocation.getCurrentLocationWeather()
-        }
-        permissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCurrentWeatherBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchWeatherBinding.inflate(inflater, container, false)
+
+        binding.submitButton.setOnClickListener {
+            viewModel.getNewWeather(binding.searchingField.text.toString())
+            binding.searchingField.isCursorVisible = false
+            binding.submitButton.isEnabled = false
+        }
+
 
         binding.toFiveDayWeatherButton.setOnClickListener {
             val action =
-                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFiveDayWeatherFragment(
-                    currentLocationName
+                SearchWeatherFragmentDirections.actionSearchWeatherFragmentToXWeatherFragment(
+                    binding.searchingField.text.toString()
                 )
             findNavController().navigate(action)
         }
 
-
-        viewModelCurrentLocation.currentLocationWeather.observe(viewLifecycleOwner) { weather ->
+        viewModel.currentWeather.observe(viewLifecycleOwner) { weather ->
             if (weather != null) {
                 when (weather.weather[0].icon) {
                     "01d", "01n" -> binding.icon.load(R.drawable.icon_clear_day)
@@ -76,10 +65,6 @@ class CurrentWeatherFragment : Fragment() {
                     "13d", "13n" -> binding.icon.load(R.drawable.icon_snow_weather)
                     "50d", "50n" -> binding.icon.load(R.drawable.icon_cloudy_weather)
                 }
-                currentLocationName = weather.name
-                currentLocationTemprature = weather.main.temp.toString()
-
-
                 binding.country.text = weather.name
                 var string = weather.main.temp.toString() + "°C"
                 binding.temperature.text = (string)
@@ -97,55 +82,17 @@ class CurrentWeatherFragment : Fragment() {
                 binding.weatherDescription.visibility = View.VISIBLE
                 binding.maxMinTemperature.visibility = View.VISIBLE
                 binding.otherInformation.visibility = View.VISIBLE
-                binding.toFiveDayWeatherButton.visibility = View.VISIBLE
-
+                binding.submitButton.isEnabled = true
             }
         }
+
+
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_search -> {
-                val action =
-                    CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToSearchWeatherFragment(
-                        ""
-                    )
-                findNavController().navigate(action)
-            }
-//            R.id.action_convertToCelsius -> {
-//                val temp = convertToCel(currentLocationTemprature.toDouble())
-//                binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°C"
-//
-//            }
-            R.id.action_convertToFahrenheit -> {
-                val temp = convertToFahren(currentLocationTemprature.toDouble())
-                binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°F"
-            }
-            R.id.action_fav -> {
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    fun convertToFahren(temp: Double): Double {
-        return (temp * 5 / 9) + 32
-    }
-
-    fun convertToCel(temp: Double): Double {
-        return (temp - 32) * 5 / 9
     }
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).supportActionBar?.title = "Current weather"
+        (activity as AppCompatActivity).supportActionBar?.title = "Search Weather"
     }
 
     override fun onDestroyView() {

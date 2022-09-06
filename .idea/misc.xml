@@ -4,11 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Keneki/Downloads/Documents/WeatherApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.141" />
+        <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.141" />
         <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/layout/fragment_current_weather.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/layout/fragment_five_day_weather.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/layout/fragment_search_weather.xml" value="0.20427305888483585" />
         <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/layout/fragment_x_day_weather.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/layout/weather_item_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Keneki/Downloads/Weather App/app/src/main/res/menu/menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

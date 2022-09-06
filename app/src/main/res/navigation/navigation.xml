@@ -15,11 +15,35 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_SearchWeatherFragment"
+            app:destination="@id/fragmentSearchWeather"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="cityNameArg"
             app:argType="string"
             android:defaultValue="London" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSearchWeather"
+        android:name="com.example.weatherapp.presentation.ui.fragments.SearchWeatherFragment"
+        android:label="SearchWeatherFragment" >
+        <action
+            android:id="@+id/action_SearchWeatherFragment_to_XWeatherFragment"
+            app:destination="@id/XDayWeatherFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <argument
+        android:name="cityName"
+        app:argType="string" />
+    </fragment>
+
     <fragment
         android:id="@+id/XDayWeatherFragment"
         android:name="com.example.weatherapp.presentation.ui.fragments.XDayWeatherFragment"
