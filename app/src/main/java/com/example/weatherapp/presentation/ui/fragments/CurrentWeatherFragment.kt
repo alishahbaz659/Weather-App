@@ -70,45 +70,49 @@ class CurrentWeatherFragment : Fragment() {
         binding.addToFavButton.setOnClickListener {
             val weatherEntity = WeatherEntity(name = currentLocationName)
             viewModelFavCities.insertRecord(weatherEntity)
+            binding.addToFavButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
         }
 
 
         viewModelCurrentLocation.currentLocationWeather.observe(viewLifecycleOwner) { weather ->
             if (weather != null) {
-                when (weather.weather[0].icon) {
-                    "01d", "01n" -> binding.icon.load(R.drawable.icon_clear_day)
-                    "02d", "02n" -> binding.icon.load(R.drawable.icon_broken_clouds)
-                    "03d", "03n" -> binding.icon.load(R.drawable.icon_mostly_cloudy)
-                    "04d", "04n" -> binding.icon.load(R.drawable.icon_broken_clouds)
-                    "09d", "09n" -> binding.icon.load(R.drawable.icon_snow_weather)
-                    "10d", "10n" -> binding.icon.load(R.drawable.icon_rainy_weather)
-                    "11d", "11n" -> binding.icon.load(R.drawable.icon_storm_weather)
-                    "13d", "13n" -> binding.icon.load(R.drawable.icon_snow_weather)
-                    "50d", "50n" -> binding.icon.load(R.drawable.icon_cloudy_weather)
+                    when (weather.weather[0].icon) {
+                        "01d", "01n" -> binding.icon.load(R.drawable.icon_clear_day)
+                        "02d", "02n" -> binding.icon.load(R.drawable.icon_broken_clouds)
+                        "03d", "03n" -> binding.icon.load(R.drawable.icon_mostly_cloudy)
+                        "04d", "04n" -> binding.icon.load(R.drawable.icon_broken_clouds)
+                        "09d", "09n" -> binding.icon.load(R.drawable.icon_snow_weather)
+                        "10d", "10n" -> binding.icon.load(R.drawable.icon_rainy_weather)
+                        "11d", "11n" -> binding.icon.load(R.drawable.icon_storm_weather)
+                        "13d", "13n" -> binding.icon.load(R.drawable.icon_snow_weather)
+                        "50d", "50n" -> binding.icon.load(R.drawable.icon_cloudy_weather)
+                    }
+                    currentLocationName = weather.name
+                    currentLocationTemprature = weather.main.temp.toString()
+
+
+                    binding.country.text = weather.name
+                    var string = weather.main.temp.toString() + "°C"
+                    binding.temperature.text = (string)
+                    string = weather.weather[0].main + ": " + weather.weather[0].description
+                    binding.weatherDescription.text = (string)
+                    string =
+                        "Max: " + weather.main.tempMax.toString() + "°C / Min: " + weather.main.tempMin + "°C"
+                    binding.maxMinTemperature.text = (string)
+                    binding.weatherPressue.text =
+                        "Pressure: " + weather.main.pressure.toString() + "hPa"
+                    binding.weatherHumidity.text =
+                        "Humidity: " + weather.main.humidity.toString() + "%"
+                    binding.weatherWindSpeed.text =
+                        "Wind speed: " + weather.wind.speed.toString() + "meter/sec"
+                    binding.weatherClouds.text = "Clouds: " + weather.clouds.all.toString() + "%"
+
+                    binding.toFiveDayWeatherButton.isEnabled = true
+                    binding.toFiveDayWeatherButton.isClickable = true
+                    binding.addToFavButton.visibility = View.VISIBLE
                 }
-                currentLocationName = weather.name
-                currentLocationTemprature = weather.main.temp.toString()
-
-
-                binding.country.text = weather.name
-                var string = weather.main.temp.toString() + "°C"
-                binding.temperature.text = (string)
-                string = weather.weather[0].main + ": " + weather.weather[0].description
-                binding.weatherDescription.text = (string)
-                string =
-                    "Max: " + weather.main.tempMax.toString() + "°C / Min: " + weather.main.tempMin + "°C"
-                binding.maxMinTemperature.text = (string)
-                binding.weatherPressue.text = "Pressure: " + weather.main.pressure.toString() +"hPa"
-                binding.weatherHumidity.text="Humidity: " + weather.main.humidity.toString() + "%"
-                binding.weatherWindSpeed.text="Wind speed: "+weather.wind.speed.toString() +"meter/sec"
-                binding.weatherClouds.text="Clouds: " + weather.clouds.all.toString() + "%"
-
-                binding.toFiveDayWeatherButton.isEnabled=true
-                binding.toFiveDayWeatherButton.isClickable=true
-                binding.addToFavButton.visibility=View.VISIBLE
-
             }
-        }
+
         return binding.root
     }
 

@@ -1,6 +1,7 @@
 package com.example.weatherapp.presentation.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -8,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.weatherapp.R
+import com.example.weatherapp.data.localDatabase.WeatherEntity
 import com.example.weatherapp.databinding.FragmentSearchWeatherBinding
+import com.example.weatherapp.presentation.viewModel.FavouriteCitiesWeatherViewModel
 
 import com.example.weatherapp.presentation.viewModel.SearchWeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchWeatherFragment : Fragment() {
     private var _binding: FragmentSearchWeatherBinding? = null
     private val binding get() = _binding!!
+    private val viewModelFavCities: FavouriteCitiesWeatherViewModel by viewModels()
 
     private val viewModel: SearchWeatherViewModel by viewModels()
+    private lateinit var searchedLocationName: String
 
 
     override fun onCreateView(
@@ -33,7 +38,7 @@ class SearchWeatherFragment : Fragment() {
             viewModel.getNewWeather(binding.searchingField.text.toString())
             binding.searchingField.isCursorVisible = false
             binding.submitButton.isEnabled = false
-        }d
+        }
 
         binding.toFiveDayWeatherButton.setOnClickListener {
             val action =
@@ -42,6 +47,12 @@ class SearchWeatherFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
+        binding.addToFavButton.setOnClickListener {
+            val weatherEntity = WeatherEntity(name = searchedLocationName)
+            viewModelFavCities.insertRecord(weatherEntity)
+            binding.addToFavButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
+        }
+
 
         viewModel.currentWeather.observe(viewLifecycleOwner) { weather ->
             if (weather != null) {
@@ -56,6 +67,7 @@ class SearchWeatherFragment : Fragment() {
                     "13d", "13n" -> binding.icon.load(R.drawable.icon_snow_weather)
                     "50d", "50n" -> binding.icon.load(R.drawable.icon_cloudy_weather)
                 }
+                searchedLocationName = weather.name
                 binding.country.text = weather.name
                 var string = weather.main.temp.toString() + "°C"
                 binding.temperature.text = (string)
@@ -64,19 +76,22 @@ class SearchWeatherFragment : Fragment() {
                 string =
                     "Max: " + weather.main.tempMax.toString() + "°C / Min: " + weather.main.tempMin + "°C"
                 binding.maxMinTemperature.text = (string)
-                binding.weatherPressue.text = "Pressure: " + weather.main.pressure.toString() +"hPa"
-                binding.weatherHumidity.text="Humidity: " + weather.main.humidity.toString() + "%"
-                binding.weatherWindSpeed.text="Wind speed: "+weather.wind.speed.toString() +"meter/sec"
-                binding.weatherClouds.text="Clouds: " + weather.clouds.all.toString() + "%"
+                binding.weatherPressue.text =
+                    "Pressure: " + weather.main.pressure.toString() + "hPa"
+                binding.weatherHumidity.text =
+                    "Humidity: " + weather.main.humidity.toString() + "%"
+                binding.weatherWindSpeed.text =
+                    "Wind speed: " + weather.wind.speed.toString() + "meter/sec"
+                binding.weatherClouds.text = "Clouds: " + weather.clouds.all.toString() + "%"
 
-                binding.toFiveDayWeatherButton.isEnabled=true
-                binding.toFiveDayWeatherButton.isClickable=true
-                binding.addToFavButton.visibility=View.VISIBLE
+                binding.toFiveDayWeatherButton.isEnabled = true
+                binding.toFiveDayWeatherButton.isClickable = true
+                binding.addToFavButton.visibility = View.VISIBLE
 
                 binding.searchingField.isCursorVisible = true
                 binding.submitButton.isEnabled = true
-
             }
+
         }
 
         return binding.root

@@ -74,7 +74,7 @@ class WeatherDetailViewFragment : Fragment() {
 
                 binding.toFiveDayWeatherButton.isEnabled=true
                 binding.toFiveDayWeatherButton.isClickable=true
-                binding.addToFavButton.visibility=View.VISIBLE
+
 
             }
         }
