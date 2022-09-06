@@ -33,8 +33,7 @@ class SearchWeatherFragment : Fragment() {
             viewModel.getNewWeather(binding.searchingField.text.toString())
             binding.searchingField.isCursorVisible = false
             binding.submitButton.isEnabled = false
-        }
-
+        }d
 
         binding.toFiveDayWeatherButton.setOnClickListener {
             val action =
@@ -65,16 +64,18 @@ class SearchWeatherFragment : Fragment() {
                 string =
                     "Max: " + weather.main.tempMax.toString() + "°C / Min: " + weather.main.tempMin + "°C"
                 binding.maxMinTemperature.text = (string)
-                string =
-                    "Pressure: " + weather.main.pressure.toString() + " hPa\nHumidity: " + weather.main.humidity.toString() + "%\nWind speed: " + weather.wind.speed.toString() + " meter/sec\nClouds: " + weather.clouds.all.toString() + "%"
-                binding.otherInformation.text = string
-                binding.icon.visibility = View.VISIBLE
-                binding.country.visibility = View.VISIBLE
-                binding.temperature.visibility = View.VISIBLE
-                binding.weatherDescription.visibility = View.VISIBLE
-                binding.maxMinTemperature.visibility = View.VISIBLE
-                binding.otherInformation.visibility = View.VISIBLE
+                binding.weatherPressue.text = "Pressure: " + weather.main.pressure.toString() +"hPa"
+                binding.weatherHumidity.text="Humidity: " + weather.main.humidity.toString() + "%"
+                binding.weatherWindSpeed.text="Wind speed: "+weather.wind.speed.toString() +"meter/sec"
+                binding.weatherClouds.text="Clouds: " + weather.clouds.all.toString() + "%"
+
+                binding.toFiveDayWeatherButton.isEnabled=true
+                binding.toFiveDayWeatherButton.isClickable=true
+                binding.addToFavButton.visibility=View.VISIBLE
+
+                binding.searchingField.isCursorVisible = true
                 binding.submitButton.isEnabled = true
+
             }
         }
 

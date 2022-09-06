@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/lukechesser"
+        android:background="@drawable/background"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -30,120 +28,274 @@
                     android:padding="10dp"
                     android:text="@string/start_text" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/submit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="2"
+                    android:background="@drawable/button"
                     android:padding="10dp"
                     android:text="@string/search" />
 
             </LinearLayout>
+
+
+
+
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/icon_cloudy_weather" />
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/temperature"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:text="---"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="20dp"
+                android:text="---"
+                android:textColor="#FFFFFF"
+                android:textSize="32sp" />
+
+            <ImageView
+                android:id="@+id/addToFavButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="25dp"
+                android:visibility="gone"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/ic_baseline_favorite_border_24" />
         </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent">
-
-
             <LinearLayout
+                android:layout_marginTop="20dp"
+                android:id="@+id/l1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
 
-                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="5dp">
 
-                <ImageView
-                    android:id="@+id/icon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/country"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pakistan"
-                    android:textColor="#FFFFFF"
-                    android:textSize="40sp"
-                    android:visibility="invisible"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/icon" />
+                        <TextView
+                            android:id="@+id/weather_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="---"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="19.20c"
-                    android:textSize="32sp"
-                    android:textColor="#FFFFFF"
-                    android:visibility="invisible"
-                    app:layout_constraintLeft_toLeftOf="@id/country"
-                    app:layout_constraintRight_toRightOf="@id/country"
-                    app:layout_constraintTop_toBottomOf="@id/country" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:id="@+id/weather_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp"
-                    android:visibility="invisible"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/temperature" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="5dp">
 
-                <TextView
-                    android:id="@+id/max_min_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="24sp"
-                    android:textColor="#FFFFFF"
-                    android:visibility="invisible"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/weather_description" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/other_information"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="24sp"
-                    android:textColor="#FFFFFF"
-                    android:visibility="invisible"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/max_min_temperature" />
+                        <TextView
+                            android:id="@+id/max_min_temperature"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="---"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/l2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/l1">
 
-        </RelativeLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="5dp">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_weight="3"
-            android:layout_height="match_parent">
-            <Button
+                        <TextView
+                            android:id="@+id/weather_pressue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="---"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view4"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/weather_humidity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="---"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/l3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/l2">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view5"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/weather_windSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="---"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view6"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/weather_clouds"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="---"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/to_five_day_weather_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button"
                 android:padding="10dp"
+                android:clickable="false"
+                android:enabled="false"
                 android:text="@string/next_days"
-                android:gravity="center|bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                android:textColor="#000000" />
         </RelativeLayout>
+
+
 
     </LinearLayout>
 </layout>
