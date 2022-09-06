@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Weather App</string>
+    <string name="search">Search</string>
+    <string name="start_text">London</string>
+    <string name="search_hint">Enter your city</string>
+    <string name="next_days">Next 5 days</string>
 </resources>
