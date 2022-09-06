@@ -1,25 +1,17 @@
 package com.example.weatherapp.presentation.ui.fragments
 
-import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.weatherapp.R
-import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.databinding.FragmentSearchWeatherBinding
-import com.example.weatherapp.presentation.viewModel.CurrentLocationWeatherViewModel
 
-import com.example.weatherapp.presentation.viewModel.CurrentWeatherViewModel
+import com.example.weatherapp.presentation.viewModel.SearchWeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
 
 
 @AndroidEntryPoint
@@ -27,7 +19,7 @@ class SearchWeatherFragment : Fragment() {
     private var _binding: FragmentSearchWeatherBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CurrentWeatherViewModel by viewModels()
+    private val viewModel: SearchWeatherViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -85,7 +77,6 @@ class SearchWeatherFragment : Fragment() {
                 binding.submitButton.isEnabled = true
             }
         }
-
 
         return binding.root
     }

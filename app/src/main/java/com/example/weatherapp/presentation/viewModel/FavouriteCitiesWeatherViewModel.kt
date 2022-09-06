@@ -14,25 +14,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrentLocationWeatherViewModel @Inject constructor(
-    private val dataSource: WeatherRepository,
-    private val locationTracker: LocationTracker
+class FavouriteCitiesWeatherViewModel @Inject constructor(
+    private val roomRepository: RoomRepository
 ) :
     ViewModel() {
-    var currentLocationWeather: MutableLiveData<WeatherResponse> =
-        MutableLiveData<WeatherResponse>()
+    var userData: MutableLiveData<List<WeatherEntity>> = MutableLiveData()
 
-    fun getCurrentLocationWeather() {
-        viewModelScope.launch(Dispatchers.IO) {
-            locationTracker.getCurrentLocation()?.let { location ->
-                currentLocationWeather.postValue(
-                    dataSource.getCurrentLocationWeather(
-                        location.latitude,
-                        location.longitude
-                    )
-                )
-            }
 
-        }
+    fun getRecordsObserver(): MutableLiveData<List<WeatherEntity>> {
+        return userData
+    }
+
+    fun loadRecords() {
+        val list = roomRepository.getRecords()
+        userData.postValue(list)
+    }
+
+    fun insertRecord(weatherEntity: WeatherEntity) {
+        roomRepository.insertRecord(weatherEntity)
+        loadRecords()
     }
 }

@@ -1,6 +1,8 @@
 package com.example.weatherapp.di
 
 import com.example.weatherapp.data.remote.WeatherService
+import com.example.weatherapp.domain.util.Constants.Companion.BASE_URL
+import com.example.weatherapp.domain.util.Constants.Companion.CONNECTION_TIMEOUT_MS
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -14,8 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-private const val CONNECTION_TIMEOUT_MS: Long = 60
-private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
 @Module
 @InstallIn(SingletonComponent::class)

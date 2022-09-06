@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.weatherapp.R
+import com.example.weatherapp.data.localDatabase.WeatherEntity
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.presentation.viewModel.CurrentLocationWeatherViewModel
+import com.example.weatherapp.presentation.viewModel.FavouriteCitiesWeatherViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +27,8 @@ class CurrentWeatherFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModelCurrentLocation: CurrentLocationWeatherViewModel by viewModels()
+    private val viewModelFavCities: FavouriteCitiesWeatherViewModel by viewModels()
+
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var currentLocationName: String
     private lateinit var currentLocationTemprature: String
@@ -60,6 +65,12 @@ class CurrentWeatherFragment : Fragment() {
                     currentLocationName
                 )
             findNavController().navigate(action)
+        }
+
+        binding.addToFavButton.setOnClickListener {
+            val weatherEntity = WeatherEntity(name = currentLocationName)
+            viewModelFavCities.insertRecord(weatherEntity)
+            Toast.makeText(activity, "Added to Favourite Successfully", Toast.LENGTH_LONG).show()
         }
 
 
@@ -129,7 +140,9 @@ class CurrentWeatherFragment : Fragment() {
                 binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°F"
             }
             R.id.action_fav -> {
-
+                val action =
+                    CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFavCityFragment()
+                findNavController().navigate(action)
             }
         }
         return super.onOptionsItemSelected(item)
