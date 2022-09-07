@@ -150,7 +150,7 @@ class CurrentWeatherFragment : Fragment() {
                 binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°F"
                 convertToCelsius.isEnabled=true
                 convertToFahrenheit.isEnabled=false
-                
+
             }
 
             R.id.action_fav -> {
