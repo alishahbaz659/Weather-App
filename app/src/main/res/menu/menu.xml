@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
         android:id="@+id/action_convertToCelsius"
         android:orderInCategory="100"
-        android:title="Celsius °C"
-         />
+        android:enabled="false"
+        android:title="Celsius °C" />
 
     <item
         android:id="@+id/action_convertToFahrenheit"
         android:orderInCategory="100"
-        android:title="Fahrenheit °F"
-        />
+        android:title="Fahrenheit °F" />
 
     <item
         android:id="@+id/action_search"

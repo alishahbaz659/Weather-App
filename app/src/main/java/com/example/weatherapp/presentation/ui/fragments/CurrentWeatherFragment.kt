@@ -31,7 +31,9 @@ class CurrentWeatherFragment : Fragment() {
 
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var currentLocationName: String
-    private lateinit var currentLocationTemprature: String
+    private var currentLocationTemprature: Double =0.0
+    lateinit var convertToCelsius:MenuItem
+    lateinit var convertToFahrenheit:MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +90,7 @@ class CurrentWeatherFragment : Fragment() {
                         "50d", "50n" -> binding.icon.load(R.drawable.icon_cloudy_weather)
                     }
                     currentLocationName = weather.name
-                    currentLocationTemprature = weather.main.temp.toString()
+                    currentLocationTemprature = weather.main.temp
 
 
                     binding.country.text = weather.name
@@ -119,10 +121,13 @@ class CurrentWeatherFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu, menu)
+        convertToCelsius=menu.findItem(R.id.action_convertToCelsius)
+        convertToFahrenheit=menu.findItem(R.id.action_convertToFahrenheit)
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             R.id.action_search -> {
                 val action =
@@ -131,15 +136,23 @@ class CurrentWeatherFragment : Fragment() {
                     )
                 findNavController().navigate(action)
             }
-//            R.id.action_convertToCelsius -> {
-//                val temp = convertToCel(currentLocationTemprature.toDouble())
-//                binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°C"
-//
-//            }
-            R.id.action_convertToFahrenheit -> {
-                val temp = convertToFahren(currentLocationTemprature.toDouble())
-                binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°F"
+            R.id.action_convertToCelsius -> {
+                val temp = f2c(currentLocationTemprature)
+                currentLocationTemprature=temp
+                binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°C"
+                convertToCelsius.isEnabled=false
+                convertToFahrenheit.isEnabled=true
+
             }
+            R.id.action_convertToFahrenheit -> {
+                val temp = c2f(currentLocationTemprature)
+                currentLocationTemprature=temp
+                binding.temperature.text = (Math.round(temp * 100.0) / 100.0).toString() + "°F"
+                convertToCelsius.isEnabled=true
+                convertToFahrenheit.isEnabled=false
+                
+            }
+
             R.id.action_fav -> {
                 val action =
                     CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFavCityFragment()
@@ -149,11 +162,11 @@ class CurrentWeatherFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun convertToFahren(temp: Double): Double {
-        return (temp * 5 / 9) + 32
+    fun c2f(temp: Double): Double {
+        return (temp * 9 / 5) + 32
     }
 
-    fun convertToCel(temp: Double): Double {
+    fun f2c(temp: Double): Double {
         return (temp - 32) * 5 / 9
     }
 

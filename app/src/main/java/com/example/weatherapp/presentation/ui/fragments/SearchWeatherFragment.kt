@@ -1,8 +1,11 @@
 package com.example.weatherapp.presentation.ui.fragments
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +15,6 @@ import com.example.weatherapp.R
 import com.example.weatherapp.data.localDatabase.WeatherEntity
 import com.example.weatherapp.databinding.FragmentSearchWeatherBinding
 import com.example.weatherapp.presentation.viewModel.FavouriteCitiesWeatherViewModel
-
 import com.example.weatherapp.presentation.viewModel.SearchWeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,9 +37,13 @@ class SearchWeatherFragment : Fragment() {
         _binding = FragmentSearchWeatherBinding.inflate(inflater, container, false)
 
         binding.submitButton.setOnClickListener {
-            viewModel.getNewWeather(binding.searchingField.text.toString())
-            binding.searchingField.isCursorVisible = false
-            binding.submitButton.isEnabled = false
+            if (validateInput(binding.searchingField.text.toString())) {
+                viewModel.getNewWeather(binding.searchingField.text.toString())
+                binding.searchingField.isCursorVisible = false
+                binding.submitButton.isEnabled = false
+                activity?.let { it1 -> hideKeyboard(it1) }
+
+            }
         }
 
         binding.toFiveDayWeatherButton.setOnClickListener {
@@ -95,6 +101,19 @@ class SearchWeatherFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun validateInput(cityName: String): Boolean {
+        return !(cityName.isNullOrEmpty())
+    }
+
+    fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onResume() {
