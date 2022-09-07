@@ -3,6 +3,8 @@ Weather application is an android application by whcih you can get weather infor
 Implemented using clean and reusable code. With dependency injection in code. <br />
 Clean architecture(Presentaion, Domain and data layer) with MVVM.<br />
 <br />
+https://github.com/alishahbaz659/Weather-App/blob/main/Diagram/Architecture%20Diagram.png
+<br />
 Details:<br />
 Language: Kotlin <br />
 Architecture: MVVM<br />
