@@ -7,7 +7,7 @@ Clean architecture(Presentaion, Domain and data layer) with MVVM.<br />
 <br />
 
 
-*Details:*<br />
+## *Details:*<br />
 
 Language: Kotlin <br />
 Architecture: MVVM<br />
@@ -19,7 +19,7 @@ LocalDatabase: Room<br />
 ViewModel: ViewModel <br />
 TestCases & Assertions: Junit,Google truth
 
-*Features:*
+## *Features:*
 1) Display the weather data(temp, humidity, wind,...) for the user's current location <br />
 2) List of weather data for X number of days (Scrollable) <br />
 3) Search weather data for another city <br />
